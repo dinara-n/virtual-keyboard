@@ -16,22 +16,66 @@ document.addEventListener('DOMContentLoaded', () => {
   showApropriateKeys();
   htmlKeyboard = document.querySelector('.keyboard');
   const htmlDisplay = document.querySelector('.display');
+  let cursor = 0;
+  htmlDisplay.focus();
   htmlKeyboard.addEventListener('click', (event) => {
     const htmlKey = event.target.closest('.btn');
     if (htmlKey && htmlKey.classList.contains('btn--regular')) {
-      htmlDisplay.innerHTML += htmlKey.querySelector('.show').innerHTML;
+    //   htmlDisplay.innerHTML += htmlKey.querySelector('.show').innerHTML;
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKey.querySelector('.show').innerHTML + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
+      htmlDisplay.selectionStart = cursor + 1;
+      htmlDisplay.selectionEnd = cursor + 1;
+      htmlDisplay.focus();
     }
     if (htmlKey && htmlKey.classList.contains('btn--tab')) {
-      htmlDisplay.innerHTML += '    ';
+    //   htmlDisplay.innerHTML += '    ';
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = `${htmlDisplay.value.slice(0, htmlDisplay.selectionStart)}    ${htmlDisplay.value.slice(htmlDisplay.selectionEnd)}`;
+      htmlDisplay.selectionStart = cursor + 4;
+      htmlDisplay.selectionEnd = cursor + 4;
+      htmlDisplay.focus();
+    }
+    if (htmlKey && htmlKey.classList.contains('btn--backspace')) {
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart - 1)
+      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
+      htmlDisplay.selectionStart = cursor - 1;
+      htmlDisplay.selectionEnd = cursor - 1;
+      htmlDisplay.focus();
+    }
+    if (htmlKey && htmlKey.classList.contains('btn--del')) {
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart)
+      + htmlDisplay.value.slice(htmlDisplay.selectionEnd + 1);
+      htmlDisplay.selectionStart = cursor;
+      htmlDisplay.selectionEnd = cursor;
+      htmlDisplay.focus();
     }
     if (htmlKey && htmlKey.classList.contains('btn--enter')) {
-      htmlDisplay.innerHTML += '\n';
+    //   htmlDisplay.innerHTML += '\n';
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = `${htmlDisplay.value.slice(0, htmlDisplay.selectionStart)}\n${htmlDisplay.value.slice(htmlDisplay.selectionEnd)}`;
+      htmlDisplay.selectionStart = cursor + 1;
+      htmlDisplay.selectionEnd = cursor + 1;
+      htmlDisplay.focus();
     }
     if (htmlKey && htmlKey.classList.contains('btn--space')) {
-      htmlDisplay.innerHTML += ' ';
+    //   htmlDisplay.innerHTML += ' ';
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = `${htmlDisplay.value.slice(0, htmlDisplay.selectionStart)} ${htmlDisplay.value.slice(htmlDisplay.selectionEnd)}`;
+      htmlDisplay.selectionStart = cursor + 1;
+      htmlDisplay.selectionEnd = cursor + 1;
+      htmlDisplay.focus();
     }
     if (htmlKey && htmlKey.classList.contains('btn--arrow')) {
-      htmlDisplay.innerHTML += htmlKey.innerHTML;
+    //   htmlDisplay.innerHTML += htmlKey.innerHTML;
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart)
+      + htmlKey.innerHTML + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
+      htmlDisplay.selectionStart = cursor + 1;
+      htmlDisplay.selectionEnd = cursor + 1;
+      htmlDisplay.focus();
     }
     if (htmlKey && htmlKey.classList.contains('btn--capslock')) {
       if (keyboard.capslockOn) {
@@ -74,7 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
     || event.code === 'KeyK' || event.code === 'KeyL' || event.code === 'Semicolon' || event.code === 'Quote' || event.code === 'Backslash' || event.code === 'KeyZ'
     || event.code === 'KeyX' || event.code === 'KeyC' || event.code === 'KeyV' || event.code === 'KeyB' || event.code === 'KeyN' || event.code === 'KeyM' || event.key === ','
     || event.code === 'Period' || event.code === 'Slash' || event.code === 'Space') {
-      htmlDisplay.innerHTML += event.key;
+    //   htmlDisplay.innerHTML += event.key;
+      cursor = htmlDisplay.selectionStart;
+      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + event.key
+      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
+      htmlDisplay.selectionStart = cursor + 1;
+      htmlDisplay.selectionEnd = cursor + 1;
+      htmlDisplay.focus();
     }
     if (event.code === 'ArrowUp') {
       htmlDisplay.innerHTML += '&uarr;';
