@@ -296,17 +296,17 @@ function drawHtml() {
           <span class="en ru-lower">.</span>
       </button>
       <button class="btn btn--special btn--arrow btn--up" type="button">&uarr;</button>
-      <button class="btn btn--special btn--shift btn-shift-right" type="button">Shift</button>
+      <button class="btn btn--special btn--shift btn--shift-right" type="button">Shift</button>
   
-      <button class="btn btn--special btn--ctrl" type="button">Ctrl</button>
+      <button class="btn btn--special btn--ctrl btn--ctrl-left" type="button">Ctrl</button>
       <button class="btn btn--special" type="button">Win</button>
-      <button class="btn btn--special btn--alt" type="button">Alt</button>
+      <button class="btn btn--special btn--alt btn--alt-left" type="button">Alt</button>
       <button class="btn btn--special btn--space" type="button"> </button>
-      <button class="btn btn--special btn--alt" type="button">Alt</button>
+      <button class="btn btn--special btn--alt btn--alt-right" type="button">Alt</button>
       <button class="btn btn--special btn--arrow btn--left" type="button">&larr;</button>
       <button class="btn btn--special btn--arrow btn--down" type="button">&darr;</button>
       <button class="btn btn--special btn--arrow btn--right" type="button">&rarr;</button>
-      <button class="btn btn--special btn--ctrl" type="button">Ctrl</button>
+      <button class="btn btn--special btn--ctrl btn--ctrl-right" type="button">Ctrl</button>
   </section>
   <p>Created on Windows OS</p>
   <p>To change the language press <b>Alt</b> on the keyboard</p>

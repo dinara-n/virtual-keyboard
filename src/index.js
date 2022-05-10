@@ -4,8 +4,73 @@ import keyboard from './keyboard';
 import showApropriateKeys from './show-appropriate-keys';
 
 let htmlKeyboard;
-
-keyboard.language = 'en';
+const keysToBtns = new Map([
+  ['Backquote', '.btn--backquote'],
+  ['Digit1', '.btn--1'],
+  ['Digit2', '.btn--2'],
+  ['Digit3', '.btn--3'],
+  ['Digit4', '.btn--4'],
+  ['Digit5', '.btn--5'],
+  ['Digit6', '.btn--6'],
+  ['Digit7', '.btn--7'],
+  ['Digit8', '.btn--8'],
+  ['Digit9', '.btn--9'],
+  ['Digit0', '.btn--0'],
+  ['Minus', '.btn--minus'],
+  ['Equal', '.btn--equal'],
+  ['KeyQ', '.btn--q'],
+  ['KeyW', '.btn--w'],
+  ['KeyE', '.btn--e'],
+  ['KeyR', '.btn--r'],
+  ['KeyT', '.btn--t'],
+  ['KeyY', '.btn--y'],
+  ['KeyU', '.btn--u'],
+  ['KeyI', '.btn--i'],
+  ['KeyO', '.btn--o'],
+  ['KeyP', '.btn--p'],
+  ['BracketLeft', '.btn--bracketL'],
+  ['BracketRight', '.btn--bracketR'],
+  ['KeyA', '.btn--a'],
+  ['KeyS', '.btn--s'],
+  ['KeyD', '.btn--d'],
+  ['KeyF', '.btn--f'],
+  ['KeyG', '.btn--g'],
+  ['KeyH', '.btn--h'],
+  ['KeyJ', '.btn--j'],
+  ['KeyK', '.btn--k'],
+  ['KeyL', '.btn--l'],
+  ['Semicolon', '.btn--semicolon'],
+  ['Quote', '.btn--quote'],
+  ['Backslash', '.btn--backslash'],
+  ['KeyZ', '.btn--z'],
+  ['KeyX', '.btn--x'],
+  ['KeyC', '.btn--c'],
+  ['KeyV', '.btn--v'],
+  ['KeyB', '.btn--b'],
+  ['KeyN', '.btn--n'],
+  ['KeyM', '.btn--m'],
+  ['Comma', '.btn--comma'],
+  ['Period', '.btn--dot'],
+  ['Slash', '.btn--question'],
+]);
+const keysToBtnsSpecial = new Map([
+  ['Tab', '.btn--tab'],
+  ['Backspace', '.btn--backspace'],
+  ['Delete', '.btn--del'],
+  ['Enter', '.btn--enter'],
+  ['Space', '.btn--space'],
+  ['CapsLock', '.btn--capslock'],
+  ['ShiftLeft', '.btn--shift-left'],
+  ['ShiftRight', '.btn--shift-right'],
+  ['AltLeft', '.btn--alt-left'],
+  ['AltRight', '.btn--alt-right'],
+  ['ControlLeft', '.btn--ctrl-left'],
+  ['ControlRight', '.btn--ctrl-right'],
+  ['ArrowUp', '.btn--up'],
+  ['ArrowLeft', '.btn--left'],
+  ['ArrowDown', '.btn--down'],
+  ['ArrowRight', '.btn--right'],
+]);
 
 document.addEventListener('DOMContentLoaded', () => {
   drawHtml();
@@ -18,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const htmlDisplay = document.querySelector('.display');
   let cursor = 0;
   let keySelected;
+  const pressedKeys = new Set();
   htmlDisplay.focus();
   htmlKeyboard.addEventListener('click', (event) => {
     const htmlKey = event.target.closest('.btn');
@@ -101,8 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (htmlKey && htmlKey.classList.contains('btn--capslock')) {
       if (keyboard.capslockOn) {
         keyboard.capslockOn = false;
+        htmlKeyboard.querySelector('.btn--capslock').style.backgroundColor = '';
       } else {
         keyboard.capslockOn = true;
+        htmlKeyboard.querySelector('.btn--capslock').style.backgroundColor = '#6b6b6b';
       }
       showApropriateKeys();
     }
@@ -127,478 +195,17 @@ document.addEventListener('DOMContentLoaded', () => {
       showApropriateKeys();
     }
   });
+
   document.addEventListener('keydown', (event) => {
-    if (event.code !== 'F5') {
-      event.preventDefault();
-    }
-    if (event.code === 'Backquote') {
+    pressedKeys.add(event.code);
+    if (keysToBtns.has(event.code)) {
       event.preventDefault();
       cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--backquote').querySelector('.show').innerHTML
+      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector(keysToBtns.get(event.code)).querySelector('.show').innerHTML
       + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
       htmlDisplay.selectionStart = cursor + 1;
       htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--backquote');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit1') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--1').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--1');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit2') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--2').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--2');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit3') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--3').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--3');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit4') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--4').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--4');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit5') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--5').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--5');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit6') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--6').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--6');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit7') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--7').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--7');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit8') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--8').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--8');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit9') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--9').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--9');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Digit0') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--0').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--0');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.key === '-') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--minus').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--minus');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Equal') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--equal').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--equal');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyQ') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--q').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--q');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyW') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--w').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--w');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyE') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--e').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--e');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyR') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--r').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--r');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyT') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--t').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--t');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyY') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--y').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--y');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyU') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--u').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--u');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyI') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--i').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--i');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyO') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--o').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--o');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyP') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--p').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--p');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'BracketLeft') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--bracketL').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--bracketL');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'BracketRight') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--bracketR').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--bracketR');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyA') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--a').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--a');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyS') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--s').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--s');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyD') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--d').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--d');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyF') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--f').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--f');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyG') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--g').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--g');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyH') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--h').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--h');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyJ') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--j').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--j');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyK') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--k').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--k');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyL') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--l').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--l');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Semicolon') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--semicolon').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--semicolon');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Quote') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--quote').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--quote');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Backslash') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--backslash').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--backslash');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyZ') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--z').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--z');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyX') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--x').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--x');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyC') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--c').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--c');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyV') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--v').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--v');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyB') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--b').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--b');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyN') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--n').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--n');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'KeyM') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--m').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--m');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.key === ',') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--comma').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--comma');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Period') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--dot').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--dot');
-      keySelected.style.backgroundColor = '#6b6b6b';
-    }
-    if (event.code === 'Slash') {
-      event.preventDefault();
-      cursor = htmlDisplay.selectionStart;
-      htmlDisplay.value = htmlDisplay.value.slice(0, htmlDisplay.selectionStart) + htmlKeyboard.querySelector('.btn--question').querySelector('.show').innerHTML
-      + htmlDisplay.value.slice(htmlDisplay.selectionEnd);
-      htmlDisplay.selectionStart = cursor + 1;
-      htmlDisplay.selectionEnd = cursor + 1;
-      keySelected = htmlKeyboard.querySelector('.btn--question');
+      keySelected = htmlKeyboard.querySelector(keysToBtns.get(event.code));
       keySelected.style.backgroundColor = '#6b6b6b';
     }
     if (event.code === 'Tab') {
@@ -679,37 +286,71 @@ document.addEventListener('DOMContentLoaded', () => {
       keySelected = htmlKeyboard.querySelector('.btn--right');
       keySelected.style.backgroundColor = '#6b6b6b';
     }
-    if (event.key === 'CapsLock') {
+    if (event.code === 'CapsLock') {
       event.preventDefault();
       if (keyboard.capslockOn) {
         keyboard.capslockOn = false;
-        htmlKeyboard.querySelector('.btn--capslock').style.backgroundColor = '#000000';
+        htmlKeyboard.querySelector('.btn--capslock').style.backgroundColor = '';
       } else {
         keyboard.capslockOn = true;
         htmlKeyboard.querySelector('.btn--capslock').style.backgroundColor = '#6b6b6b';
       }
       showApropriateKeys();
     }
-    if (event.key === 'Shift') {
+    if (event.code === 'ShiftLeft') {
       event.preventDefault();
-      htmlKeyboard.querySelector('.btn--shift').style.backgroundColor = '#6b6b6b';
+      htmlKeyboard.querySelector('.btn--shift-left').style.backgroundColor = '#6b6b6b';
       if (!event.repeat) {
         keyboard.shiftPressed = true;
         showApropriateKeys();
       }
     }
-    if (event.key === 'Alt') {
+    if (event.code === 'ShiftRight') {
+      event.preventDefault();
+      htmlKeyboard.querySelector('.btn--shift-right').style.backgroundColor = '#6b6b6b';
+      if (!event.repeat) {
+        keyboard.shiftPressed = true;
+        showApropriateKeys();
+      }
+    }
+    if (event.code === 'AltLeft') {
       event.preventDefault();
       keyboard.languageToggle();
       showApropriateKeys();
       localStorage.setItem('language', keyboard.language);
-      htmlKeyboard.querySelector('.btn--alt').style.backgroundColor = '#6b6b6b';
+      htmlKeyboard.querySelector('.btn--alt-left').style.backgroundColor = '#6b6b6b';
+    }
+    if (event.code === 'AltRight') {
+      event.preventDefault();
+      keyboard.languageToggle();
+      showApropriateKeys();
+      localStorage.setItem('language', keyboard.language);
+      htmlKeyboard.querySelector('.btn--alt-right').style.backgroundColor = '#6b6b6b';
+    }
+    if (event.code === 'ControlLeft') {
+      event.preventDefault();
+      htmlKeyboard.querySelector('.btn--ctrl-left').style.backgroundColor = '#6b6b6b';
+    }
+    if (event.code === 'ControlRight') {
+      event.preventDefault();
+      htmlKeyboard.querySelector('.btn--ctrl-right').style.backgroundColor = '#6b6b6b';
     }
     htmlDisplay.focus();
   });
-  document.addEventListener('keyup', () => {
-    keyboard.shiftPressed = false;
-    showApropriateKeys();
-    keySelected.style.backgroundColor = '#000000';
+
+  document.addEventListener('keyup', (event) => {
+    if (pressedKeys.has(event.code) && keysToBtns.has(event.code)) {
+      htmlKeyboard.querySelector(keysToBtns.get(event.code)).style.backgroundColor = '';
+      pressedKeys.delete(event.code);
+    }
+    if (pressedKeys.has(event.code) && keysToBtnsSpecial.has(event.code) && event.code !== 'CapsLock') {
+      htmlKeyboard.querySelector(keysToBtnsSpecial.get(event.code)).style.backgroundColor = '';
+      pressedKeys.delete(event.code);
+      if (!pressedKeys.has('ShiftLeft') && !pressedKeys.has('ShiftRight')) {
+        keyboard.shiftPressed = false;
+        showApropriateKeys();
+      }
+    }
+    pressedKeys.delete(event.code);
   });
 });
